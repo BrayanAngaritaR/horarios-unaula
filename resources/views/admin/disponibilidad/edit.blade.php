@@ -6,25 +6,18 @@
   <a href="{{ route('disponibilidad.index') }}">&#8592; Volver</a>
 </div>  
 <div class="container mt-5 mb-5">
-  <form method="POST" action="{{ route('disponibilidad.store') }}">
+  <form method="POST" action="{{ route('disponibilidad.update', $disponibilidad->id) }}">
     @csrf
+    @method('PATCH')
   <div class="form-row">
     <div class="col-lg-2 col-md-4 mb-3">
       <label >Salón</label>
-      <input type="text" class="form-control" placeholder="Salón"  name="salon" required>
+      <input type="text" class="form-control" value="{{$disponibilidad->salon}}"  name="salon" required>
     </div>
     <div class="col-lg-2 col-md-4 mb-3">
       <label for="validationServer02">Día</label>
        <div class="form-group">
-        <select class="custom-select"  name="dia" required>
-          <option value="L">L</option>
-          <option value="M">M</option>
-          <option value="W">W</option>
-          <option value="J">J</option>
-          <option value="V">V</option>
-          <option value="S">S</option>
-          <option value="D">D</option>
-        </select>
+        <input class="form-control" type="text" name="dia" value="{{$disponibilidad->dia}}" required>
       </div>
     </div>
     <div class="col-lg-3 col-md-4 mb-3">
@@ -33,7 +26,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">&#128341;</span>
         </div>
-        <input type="text" class="form-control"placeholder="08:00"  name="entrada" required>
+        <input type="text" class="form-control"value="{{$disponibilidad->entrada}}"  name="entrada" required>
       </div>
     </div>
 
@@ -43,7 +36,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text">&#128349;</span>
         </div>
-        <input type="text" class="form-control"placeholder="16:00"  name="salida" required>
+        <input type="text" class="form-control" value="{{$disponibilidad->salida}}"  name="salida" required>
       </div>
     </div>
 
@@ -52,7 +45,7 @@
       <div class="input-group">
         <div class="input-group-prepend">
         </div>
-        <input type="text" class="form-control"placeholder="500"  name="grupo" required>
+        <input type="text" class="form-control" value="{{$disponibilidad->grupo}}"  name="grupo" required>
       </div>
     </div>
 
@@ -61,15 +54,15 @@
   <div class="form-row">
     <div class="col-lg-5 col-md-4 mb-3">
       <label >Nombre del profesor</label>
-      <input type="text" class="form-control" placeholder="Nombre del profesor"  name="nombre_profesor" required>
+      <input type="text" class="form-control" value="{{$disponibilidad->nombre_profesor}}"  name="nombre_profesor" required>
     </div>
     <div class="col-lg-4 col-md-4 mb-3">
       <label >Nombre de la materia</label>
-      <input type="text" class="form-control" placeholder="Nombre de la materia"  name="nombre_materia" required>
+      <input type="text" class="form-control" value="{{$disponibilidad->nombre_materia}}"  name="nombre_materia" required>
     </div>
     <div class="col-lg-3 col-md-4 mb-3">
       <label>Código materia</label>
-      <input type="text" class="form-control" placeholder="Código materia"  name="codigo_materia" required>
+      <input type="text" class="form-control" value="{{$disponibilidad->codigo_materia}}"  name="codigo_materia" required>
     </div>
   </div>
   <button class="btn btn-success float-right mt-5" type="submit">Agregar información</button>

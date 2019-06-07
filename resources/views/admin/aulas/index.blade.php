@@ -6,22 +6,27 @@
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<h4 class="my-auto">Aulas</h4>
 			</div>
+      @if(Auth::user()->rol == 'planeacion')
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<a href="{{route('aulas.create')}}" class="btn btn-outline-success float-right">Agregar</a>
 			</div>
+      @endif
 		</div>
 		<table class="table table-responsive">
   <thead>
     <tr>
       <th scope="col" row="1">Código</th>
+      @if(Auth::user()->rol == 'planeacion')
       <th scope="col">Editar</th>
       <th scope="col">Eliminar</th>
+      @endif
     </tr>
   </thead>
   <tbody>
   	@foreach($aulas as $aula)
     <tr>
       <th scope="row" width="80%">{{$aula->codigo_aula}}</th>
+      @if(Auth::user()->rol == 'planeacion')
       <td width="20%"><a href="{{route('aulas.edit', $aula->id)}}" class="btn btn-outline-primary">Editar</a></td>
       <td width="10%">
         <form action="{{ route('aulas.destroy', $aula->id) }}" method="POST">
@@ -30,6 +35,7 @@
           <button type="submit" class="btn btn-outline-danger">Eliminar</button>
         </form>
       </td>
+      @endif
     </tr>
 
     @endforeach

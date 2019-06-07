@@ -6,17 +6,21 @@
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<h4 class="my-auto">Materias</h4>
 			</div>
+      @if(Auth::user()->rol == 'planeacion')
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<a href="{{route('materias.create')}}" class="btn btn-outline-success float-right">Agregar</a>
 			</div>
+      @endif
 		</div>
 		<table class="table table-responsive">
   <thead>
     <tr>
       <th scope="col" row="1">Nombre</th>
       <th scope="col" row="1">Código</th>
+      @if(Auth::user()->rol == 'planeacion')
       <th scope="col">Editar</th>
       <th scope="col">Eliminar</th>
+      @endif
     </tr>
   </thead>
   <tbody>
@@ -24,6 +28,7 @@
     <tr>
       <th scope="row" width="40%">{{$materia->name}}</th>
       <th scope="row" width="40%">{{$materia->codigo}}</th>
+      @if(Auth::user()->rol == 'planeacion')
       <td width="20%"><a href="{{route('materias.edit', $materia->id)}}" class="btn btn-outline-primary">Editar</a></td>
       <td width="10%">
         <form action="{{ route('materias.destroy', $materia->id) }}" method="POST">
@@ -32,6 +37,7 @@
           <button type="submit" class="btn btn-outline-danger">Eliminar</button>
         </form>
       </td>
+      @endif
     </tr>
 
     @endforeach

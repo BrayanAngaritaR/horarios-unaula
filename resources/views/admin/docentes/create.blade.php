@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@if(Auth::user()->rol == 'planeacion')
 <div class="container">
   <a href="{{ route('docentes.index') }}">&#8592; Volver</a>
 </div>
@@ -17,4 +18,14 @@
   <button class="btn btn-success float-right mt-5" type="submit">Agregar información</button>
 </form>
 </div>
+@else
+<div class="container mt-2">
+    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+      <strong>No tienes acceso para ver este contenido</strong>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+</div>
+@endif
 @endsection

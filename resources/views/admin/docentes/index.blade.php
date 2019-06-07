@@ -6,30 +6,37 @@
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<h4 class="my-auto">Docentes</h4>
 			</div>
+      @if(Auth::user()->rol == 'planeacion')
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<a href="{{route('docentes.create')}}" class="btn btn-outline-success float-right">Agregar</a>
 			</div>
+      @endif
 		</div>
 		<table class="table table-responsive">
   <thead>
     <tr>
       <th scope="col" row="1">Nombre completo</th>
+      @if(Auth::user()->rol == 'planeacion')
       <th scope="col">Editar</th>
       <th scope="col">Eliminar</th>
+      @endif
     </tr>
   </thead>
   <tbody>
-  	@foreach($docentes as $profesor)
+  	@foreach($docentes as $docente)
     <tr>
-      <th scope="row" width="80%">{{$profesor->name}}</th>
-      <td width="20%"><a href="{{route('docentes.edit', $profesor->id)}}" class="btn btn-outline-primary">Editar</a></td>
+      <th scope="row" width="80%">{{$docente->name}}</th>
+
+      @if(Auth::user()->rol == 'planeacion')
+      <td width="20%"><a href="{{route('docentes.edit', $docente->id)}}" class="btn btn-outline-primary">Editar</a></td>
       <td width="10%">
-        <form action="{{ route('docentes.destroy', $profesor->id) }}" method="POST">
+        <form action="{{ route('docentes.destroy', $docente->id) }}" method="POST">
           @csrf
           @method('DELETE')
           <button type="submit" class="btn btn-outline-danger">Eliminar</button>
         </form>
       </td>
+      @endif
     </tr>
 
     @endforeach

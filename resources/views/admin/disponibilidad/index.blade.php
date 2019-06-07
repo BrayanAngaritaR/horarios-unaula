@@ -6,9 +6,11 @@
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
 				<h4 class="my-auto">Disponibilidad de aulas</h4>
 			</div>
+      @if(Auth::user()->rol == 'planeacion')
 			<div class="col-sm-12 col-md-6 mt-4 mb-4">
-				<a href="#" class="btn btn-outline-success float-right">Agregar</a>
+				<a href="{{ route('disponibilidad.create') }}" class="btn btn-outline-success float-right">Agregar</a>
 			</div>
+      @endif
 		</div>
 		<table class="table table-responsive">
   <thead>
@@ -21,8 +23,10 @@
       <th scope="col">Nombre del profesor</th>
       <th scope="col">Nombre de la materia</th>
       <th scope="col">Código de la materia</th>
+      @if(Auth::user()->rol == 'planeacion')
       <th scope="col">Editar</th>
       <th scope="col">Eliminar</th>
+      @endif
     </tr>
   </thead>
   <tbody>
@@ -32,12 +36,26 @@
       <td>{{$aula->dia}}</td>
       <td>{{$aula->entrada}}</td>
       <td>{{$aula->salida}}</td>
-      <td>{{$aula->grupo}}</td>
+      <td>
+        @if(strlen($aula->grupo) == 1)
+          00{{$aula->grupo}}
+        @else
+          {{$aula->grupo}}
+        @endif
+      </td>
       <td>{{$aula->nombre_profesor}}</td>
       <td>{{$aula->nombre_materia}}</td>
       <td>{{$aula->codigo_materia}}</td>
-      <td><a href="#" class="btn btn-outline-primary">Editar</a></td>
-      <td><a href="#" class="btn btn-outline-danger">Eliminar</a></td>
+      @if(Auth::user()->rol == 'planeacion')
+      <td><a href="{{route('disponibilidad.edit', $aula->id)}}" class="btn btn-outline-primary">Editar</a></td>
+      <td width="10%">
+        <form action="{{ route('disponibilidad.destroy', $aula->id) }}" method="POST">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-outline-danger">Eliminar</button>
+        </form>
+      </td>
+      @endif
     </tr>
 
     @endforeach
