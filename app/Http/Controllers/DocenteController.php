@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Docente;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DocenteController extends Controller
 {
@@ -13,7 +15,8 @@ class DocenteController extends Controller
      */
     public function index()
     {
-        //
+        $docentes = DB::table('docentes')->latest()->paginate(20);
+        return view('admin.docentes.index', compact('docentes'));
     }
 
     /**
@@ -23,7 +26,7 @@ class DocenteController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.docentes.create');
     }
 
     /**
@@ -34,7 +37,12 @@ class DocenteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('docentes')->insert([
+            'name' => $request->name,
+        ]);
+        return redirect()->back()
+                        ->with('success','Se ha insertado el salón');
+        //dd($request);
     }
 
     /**
@@ -54,9 +62,9 @@ class DocenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(docente $docente)
     {
-        //
+        return view('admin.docentes.edit', compact('docente'));
     }
 
     /**
@@ -66,9 +74,16 @@ class DocenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, docente $docente)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+  
+        $docente->update($request->all());
+
+        return redirect()->back()
+        ->with('success','Se ha actualizado el nombre del docente');
     }
 
     /**
@@ -77,8 +92,11 @@ class DocenteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(docente $docente)
     {
-        //
+        $docente->delete();
+  
+        return redirect()->back()
+        ->with('success','Se ha eliminado el registro');
     }
 }

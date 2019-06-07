@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Materia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MateriaController extends Controller
 {
@@ -13,7 +15,8 @@ class MateriaController extends Controller
      */
     public function index()
     {
-        //
+        $materias = DB::table('materias')->latest()->paginate(20);
+        return view('admin.materias.index', compact('materias'));
     }
 
     /**
@@ -23,7 +26,7 @@ class MateriaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.materias.create');
     }
 
     /**
@@ -34,7 +37,12 @@ class MateriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('materias')->insert([
+            'name' => $request->name,
+            'codigo' => $request->codigo,
+        ]);
+        return redirect()->back()
+        ->with('success','Se ha insertado la materia');
     }
 
     /**
@@ -54,9 +62,9 @@ class MateriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(materia $materia)
     {
-        //
+        return view('admin.materias.edit', compact('materia'));
     }
 
     /**
@@ -66,9 +74,17 @@ class MateriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, materia $materia)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'codigo' => 'required',
+        ]);
+  
+        $materia->update($request->all());
+
+        return redirect()->back()
+        ->with('success','Se ha actualizado la materia');
     }
 
     /**
@@ -77,8 +93,11 @@ class MateriaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(materia $materia)
     {
-        //
+        $materia->delete();
+  
+        return redirect()->back()
+        ->with('success','Se ha eliminado el registro');
     }
 }

@@ -1,8 +1,10 @@
 <?php
-
+ 
 namespace App\Http\Controllers;
 
+use App\Aula;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AulaController extends Controller
 {
@@ -13,7 +15,8 @@ class AulaController extends Controller
      */
     public function index()
     {
-        //
+        $aulas = DB::table('aulas')->paginate(20);
+        return view('admin.aulas.index', compact('aulas'));
     }
 
     /**
@@ -23,7 +26,7 @@ class AulaController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.aulas.create');
     }
 
     /**
@@ -34,7 +37,12 @@ class AulaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('aulas')->insert([
+            'codigo_aula' => $request->codigo_aula,
+        ]);
+        return redirect()->back()
+                        ->with('success','Se ha insertado el salón');
+        //dd($request);
     }
 
     /**
@@ -54,9 +62,9 @@ class AulaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Aula $aula)
     {
-        //
+        return view('admin.aulas.edit', compact('aula'));
     }
 
     /**
@@ -66,9 +74,16 @@ class AulaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Aula $aula)
     {
-        //
+        $request->validate([
+            'codigo_aula' => 'required',
+        ]);
+  
+        $aula->update($request->all());
+
+        return redirect()->back()
+        ->with('success','Se ha actualizado el código');
     }
 
     /**
@@ -77,8 +92,11 @@ class AulaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Aula $aula)
     {
-        //
+        $aula->delete();
+  
+        return redirect()->back()
+        ->with('success','Se ha eliminado el registro');
     }
 }
