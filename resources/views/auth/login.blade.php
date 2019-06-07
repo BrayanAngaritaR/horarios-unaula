@@ -66,6 +66,38 @@
                         </div>
                     </form>
                 </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-sm-12 text-center">
+                            <h5>Datos de prueba</h5>
+                        </div>
+
+                        <div class="col-sm-6 text-center mt-3 mb-3">
+                            <h5>Email</h5>
+                        </div>
+
+                        <div class="col-sm-6 text-center mt-3 mb-3">
+                            <h5>Contraseña</h5>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            <p>encargado@horarios.test</p>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            <p>password</p>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            <p>planeacion@horarios.test</p>
+                        </div>
+
+                        <div class="col-sm-6 text-center">
+                            <p>password</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
